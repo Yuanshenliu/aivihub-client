@@ -1,0 +1,42 @@
+{
+  "color": {
+    "default": {
+      "primary": "#ff82ab"
+    },
+    "dark": {
+      "primary": "#d44e7d"
+    }
+  },
+  "text": {
+    "default": {
+      "regular": "#000000E0",
+      "secondary": "#000000A6",
+      "disabled": "#00000040"
+    },
+    "dark": {
+      "regular": "#FFFFFFD9",
+      "secondary": "#FFFFFFA6",
+      "disabled": "#FFFFFF40"
+    }
+  },
+  "border": {
+    "default": {
+      "regular": "#D9D9D9FF",
+      "t1": "#f1f2f3"
+    },
+    "dark": {
+      "regular": "#424242FF",
+      "t1": "#232527"
+    }
+  },
+  "background": {
+    "default": {
+      "regular": "#fff",
+      "dialog": "#fff"
+    },
+    "dark": {
+      "regular": "#17181a",
+      "dialog": "#161619"
+    }
+  }
+}

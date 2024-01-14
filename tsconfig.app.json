@@ -1,0 +1,28 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "types/env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "types",
+    "electron",
+    "electron/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "preserveSymlinks": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "types/*": [
+        "./types/*"
+      ]
+    }
+  }
+}
