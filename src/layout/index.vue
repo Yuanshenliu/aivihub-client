@@ -13,13 +13,13 @@ import Navbar from './components/Navbar/index.vue'
 
       <div class="app-main-wrap w-full">
         <scrollbar>
-          <transition name="fade">
-            <router-view v-slot="{ Component }">
-              <keep-alive :exclude="[]">
+          <router-view v-slot="{ Component }">
+            <keep-alive :exclude="[]">
+              <fade-transition>
                 <component :is="Component"></component>
-              </keep-alive>
-            </router-view>
-          </transition>
+              </fade-transition>
+            </keep-alive>
+          </router-view>
         </scrollbar>
       </div>
     </div>

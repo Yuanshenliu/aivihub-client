@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import NavSearch from './NavSearch.vue'
-import { useAppStore } from '@/stores/app'
 
 defineOptions({ name: 'navbarComp' })
 
@@ -31,9 +30,9 @@ const restoreWindow = () => {
 <template>
   <div class="navbar-wrap drag relative w-full flex-shrink-0 border-t1 bg-regular">
     <div class="logo-wrap flex items-center pl-6">
-      <div class="title pt-2 text-primary">aii vi hub</div>
+      <div class="title pt-2 text-primary"><span>aiivi</span><span class="ml-1">hub</span></div>
 
-      <transition name="fade">
+      <transition>
         <div class="ml-7" id="header-wrapper" v-show="appStore.showNavTab"></div>
       </transition>
     </div>
@@ -45,14 +44,9 @@ const restoreWindow = () => {
         <svg-icon name="mini" style="font-size: 16px"></svg-icon>
       </div>
 
-      <div class="no-drag opt-icon mr-5">
-        <svg-icon
-          name="restore"
-          style="font-size: 16px"
-          v-if="fullWin"
-          @click="restoreWindow"
-        ></svg-icon>
-        <svg-icon name="max" style="font-size: 16px" v-else @click="maxWindow"></svg-icon>
+      <div class="no-drag opt-icon mr-5" @click="fullWin ? restoreWindow() : maxWindow()">
+        <svg-icon name="restore" style="font-size: 16px" v-if="fullWin"></svg-icon>
+        <svg-icon name="max" style="font-size: 16px" v-else></svg-icon>
       </div>
 
       <div class="no-drag opt-icon" @click="closeWindow">
@@ -72,8 +66,20 @@ const restoreWindow = () => {
   border-bottom: 1px solid var(--tw-border-t1);
 
   .title {
-    font-family: SentyFunPark, serif;
-    font-size: 31px;
+    span {
+      font-family: HanyiSentyPailouArch, serif;
+      font-size: 31px;
+    }
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

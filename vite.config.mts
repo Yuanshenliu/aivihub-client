@@ -57,12 +57,22 @@ export default defineConfig({
       imports: [
         'vue',
         'vue-router',
-        '@vueuse/core'
+        '@vueuse/core',
+        {
+          '@/composables': [
+            'useItem', 'useAppMainSize'
+          ]
+        },
+        {
+          '@/stores': [
+            'useAppStore'
+          ]
+        }
       ]
     }),
     Components({
       extensions: ['vue', 'md', 'tsx'],
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/, /\.tsx$/, /\.ts$/],
+      include: [/\.vue$/, /\.vue\?vue/, /\.tsx$/],
       dirs: ['src/components'],
       dts: 'types/components.d.ts',
       resolvers: [

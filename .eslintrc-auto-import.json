@@ -290,6 +290,9 @@
     "watchWithFilter": true,
     "whenever": true,
     "useStore": true,
-    "defineStore": true
+    "defineStore": true,
+    "useAppMainSize": true,
+    "useItem": true,
+    "useAppStore": true
   }
 }

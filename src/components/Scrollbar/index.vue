@@ -1,44 +1,60 @@
 <script setup lang="ts">
-import Bar from './Bar.vue';
+import Bar from './Bar.vue'
+import { updateScrollView } from './index'
 
-defineProps<{ viewClass?: string, viewStyle?: Record<string, any> }>();
+defineOptions({ name: 'ScrollBar' })
+defineProps<{ viewClass?: string; viewStyle?: Record<string, any> }>()
 
-const wrap = ref<HTMLDivElement>();
-const view = ref<HTMLDivElement>();
-const sizeWidth = ref('0');
-const sizeHeight = ref('0');
-const moveX = ref(0);
-const moveY = ref(0);
-provide('wrap', wrap);
+const wrap = ref<HTMLDivElement>()
+const view = ref<HTMLDivElement>()
+const sizeWidth = ref('0')
+const sizeHeight = ref('0')
+const moveX = ref(0)
+const moveY = ref(0)
+provide('wrap', wrap)
+
+const route = useRoute()
 
 const update = () => {
-  let heightPercentage =
-    (wrap.value!.clientHeight * 100) / wrap.value!.scrollHeight;
-  let widthPercentage =
-    (wrap.value!.clientWidth * 100) / wrap.value!.scrollWidth;
-  sizeHeight.value = heightPercentage < 100 ? heightPercentage + '%' : '';
-  sizeWidth.value = widthPercentage < 100 ? widthPercentage + '%' : '';
-};
+  let heightPercentage = (wrap.value!.clientHeight * 100) / wrap.value!.scrollHeight
+  let widthPercentage = (wrap.value!.clientWidth * 100) / wrap.value!.scrollWidth
+  sizeHeight.value = heightPercentage < 100 ? heightPercentage + '%' : ''
+  sizeWidth.value = widthPercentage < 100 ? widthPercentage + '%' : ''
+}
 
 const handleScroll = () => {
-  moveY.value = (wrap.value!.scrollTop * 100) / wrap.value!.clientHeight;
-  moveX.value = (wrap.value!.scrollLeft * 100) / wrap.value!.clientWidth;
-};
+  moveY.value = (wrap.value!.scrollTop * 100) / wrap.value!.clientHeight
+  moveX.value = (wrap.value!.scrollLeft * 100) / wrap.value!.clientWidth
+}
 
 onMounted(() => {
-  nextTick(update);
-  view.value!.addEventListener('resize', update);
-});
+  view.value!.addEventListener('resize', update)
+})
 
 onBeforeUnmount(() => {
-  view.value!.removeEventListener('resize', update);
-});
+  view.value!.removeEventListener('resize', update)
+})
+
+watch(
+  () => route,
+  () => {
+    nextTick(update)
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
+
+provide(updateScrollView, () => {
+  setTimeout(() => update(), 250)
+})
 </script>
 
 <template>
   <div class="scrollbar">
     <div class="scrollbar__wrap" ref="wrap" @scroll="handleScroll">
-      <div class="scrollbar__view" ref="view" :class='viewClass' :style='viewStyle'>
+      <div class="scrollbar__view relative" ref="view" :class="viewClass" :style="viewStyle">
         <slot></slot>
       </div>
     </div>

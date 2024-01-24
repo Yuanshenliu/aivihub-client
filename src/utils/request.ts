@@ -2,7 +2,6 @@ import axios from 'axios'
 import type { SMRequestConfig } from 'types/request'
 import type { AxiosInstance } from 'axios'
 import { message as aMsg } from 'ant-design-vue'
-import { useAppStore } from '@/stores/app'
 
 enum ResultEnum {
   SUCCESS = 'SUCCESS',

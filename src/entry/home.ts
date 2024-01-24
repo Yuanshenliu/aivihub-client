@@ -2,7 +2,6 @@ import type { AppParams } from 'types/index'
 import buildApp from '@/utils/entry-build'
 import { RouterView } from 'vue-router'
 import router from '@/router'
-import { useAppStore } from '@/stores/app'
 
 window.electron.invoke<AppParams>('init-app').then((params) => {
   const { app, setAppParams } = buildApp(

@@ -37,3 +37,33 @@ html {
 .no-drag {
   -webkit-app-region: no-drag;
 }
+
+.loading-wrap {
+  background: linear-gradient(90deg, rgba(50, 50, 50, 0.06) 25%, rgba(50, 50, 50, 0.15) 37%, rgba(50, 50, 50, 0.06) 63%);
+  background-size: 400% 100%;
+  animation-name: css-xu9wm8-ant-skeleton-loading;
+  animation-duration: 1.4s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+.dark {
+  .loading-wrap {
+    background: linear-gradient(90deg, rgba(100, 100, 100, 0.06) 25%, rgba(100, 100, 100, 0.15) 37%, rgba(100, 100, 150, 0.06) 63%);
+    background-size: 400% 100%;
+    animation-name: css-xu9wm8-ant-skeleton-loading;
+    animation-duration: 1.4s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes css-xu9wm8-ant-skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0 50%;
+  }
+}

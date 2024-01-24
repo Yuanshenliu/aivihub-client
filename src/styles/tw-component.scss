@@ -1,3 +1,12 @@
 .opt-icon {
   @apply flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-base hover:bg-gray-200 text-secondary dark:hover:bg-gray-700;
 }
+
+.card-item-poster {
+  @apply w-full;
+  aspect-ratio: var(--poster-aspect-ratio);
+}
+
+.card-item-context {
+
+}
