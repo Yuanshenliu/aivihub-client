@@ -16,7 +16,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: fileURLToPath(new URL('./html/home.html', import.meta.url)),
-        login: fileURLToPath(new URL('./html/login.html', import.meta.url))
+        login: fileURLToPath(new URL('./html/login.html', import.meta.url)),
+        dialog: fileURLToPath(new URL('./html/dialog.html', import.meta.url))
       }
     }
   },

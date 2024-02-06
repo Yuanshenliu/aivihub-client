@@ -6,9 +6,16 @@ function useAppMainSize(gapWidth: number = 0, gapHeight: number = 0) {
 
   const windowBounding = useWindowSize()
 
+  const w = computed(() => windowBounding.width.value - sideBarWidth + 'px')
+
   return {
-    width: computed(() => windowBounding.width.value - sideBarWidth - gapWidth),
-    height: computed(() => windowBounding.height.value - navHeight - gapHeight)
+    width: computed(() => windowBounding.width.value - sideBarWidth - gapWidth * 2),
+    height: computed(() => windowBounding.height.value - navHeight - gapHeight),
+    style: computed(() => ({
+      width: w.value,
+      paddingLeft: gapWidth + 'px',
+      paddingRight: gapWidth + 'px'
+    }))
   }
 }
 

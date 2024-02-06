@@ -14,6 +14,15 @@ const sm = (ev: Event) => {
     toggleDark()
   })
 }
+
+function back() {
+  router.back()
+}
+
+function linkToVideo() {
+  if (route.meta.type === 'Video') return
+  router.push({ name: 'Video' })
+}
 </script>
 
 <template>
@@ -21,6 +30,7 @@ const sm = (ev: Event) => {
     <div class="flex flex-col items-center">
       <div class="back flex w-full items-center justify-center">
         <div
+          @click="back"
           class="no-drag mt-2 flex cursor-pointer rounded-lg p-1 text-secondary hover:bg-zinc-200 dark:hover:bg-zinc-700"
         >
           <svg-icon name="left" class="cursor-pointer text-lg"></svg-icon>
@@ -39,7 +49,7 @@ const sm = (ev: Event) => {
       <div
         class="no-drag text-sideBar mt-7 flex cursor-pointer flex-col items-center text-secondary"
         :class="{ '!text-primary': route.meta.type === 'video' }"
-        @click="router.push({ name: 'Video' })"
+        @click="linkToVideo"
       >
         <svg-icon name="video" class="text-[22px]" />
         <span class="mt-1.5 text-xs">视频</span>

@@ -4,17 +4,22 @@ export enum OnEvent {
   SET_THEME = 'set-theme',
   OPEN_DEV_TOOL = 'open-dev-tool',
   LOGGED = 'logged',
-  SET_FULL_WINDOW = 'set-full-window'
+  SET_FULL_WINDOW = 'set-full-window',
+  CLOSE_DIALOG = 'close-dialog',
+  SET_IGNORE_MOUSE_EVENT = 'set-ignore-mouse-events'
 }
 
 export enum HandleEvent {
   INIT_APP = 'init-app',
-  CAPTURE = 'capture'
+  CAPTURE = 'capture',
+  SELECT_IMAGE = 'select-image',
+  OPEN_DIALOG = 'open-dialog'
 }
 
 export enum SendEvent {
   ASYNC_PARAMS = 'async-params',
-  WINDOW_MAX_SIZE = 'window-max-size'
+  WINDOW_MAX_SIZE = 'window-max-size',
+  DIALOG_DATA = 'dialog-data'
 }
 
 export type OnEventChannels = `${OnEvent}`

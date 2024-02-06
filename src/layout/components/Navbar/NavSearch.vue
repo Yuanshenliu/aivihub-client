@@ -56,7 +56,7 @@ const customClick = () => {
   top: 50%;
   position: absolute;
   width: 330px;
-  height: 40px;
+  height: 37px;
   right: 350px;
   transform: translate3d(50%, -50%, 0);
   border: 1px solid transparent;

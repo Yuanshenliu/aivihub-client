@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { CardItemBounds, UpperField } from 'types/index'
+import type { UpperField } from 'types/index'
 
 defineOptions({ name: 'UpperCard' })
-defineProps<{ itemField: CardItemBounds; upper?: UpperField }>()
+defineProps<{ upper?: UpperField }>()
 const emit = defineEmits<{
   click: [id?: string]
 }>()
 </script>
 
 <template>
-  <div :style="{ ...itemField.value }" class="cursor-pointer" @click="emit('click', upper?.id)">
+  <div class="h-fit w-full cursor-pointer" @click="emit('click', upper?.id)">
     <div class="card-item-poster" :class="{ 'loading-wrap': !upper?.id }"></div>
 
     <div class="flex h-[35px] w-full items-center text-center text-[15px]">

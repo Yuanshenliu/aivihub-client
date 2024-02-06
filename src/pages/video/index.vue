@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import UpperList from '@/views/video/views/UpperList.vue'
-import VideoList from '@/views/video/views/VideoList.vue'
+import UpperList from '@/pages/video/views/UpperList.vue'
+import VideoList from '@/pages/video/views/VideoList.vue'
 
 defineOptions({ name: 'videoPage' })
 
@@ -27,7 +27,7 @@ const activeComponent = computed(() => comp[activeTab.value])
 </script>
 
 <template>
-  <page-wrap>
+  <div class="page-wrap">
     <NavTabsWrap>
       <Tabs
         v-model="activeTab"
@@ -43,5 +43,5 @@ const activeComponent = computed(() => comp[activeTab.value])
         <component :is="activeComponent"></component>
       </keep-alive>
     </FadeTransition>
-  </page-wrap>
+  </div>
 </template>

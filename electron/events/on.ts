@@ -32,3 +32,8 @@ ipcMain.on(OnEvent.SET_FULL_WINDOW, (_event, full) => {
     BrowserWindow.fromWebContents(_event.sender)?.restore()
   }
 })
+
+ipcMain.on(OnEvent.SET_IGNORE_MOUSE_EVENT, (_event, ignore, options) => {
+  const win = BrowserWindow.fromWebContents(_event.sender)
+  win?.setIgnoreMouseEvents(ignore, options)
+})

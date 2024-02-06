@@ -8,20 +8,22 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AAutoComplete: typeof import('ant-design-vue/es')['AutoComplete']
+    AAvatar: typeof import('ant-design-vue/es')['Avatar']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
     AForm: typeof import('ant-design-vue/es')['Form']
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
     Bar: typeof import('./../src/components/Scrollbar/Bar.vue')['default']
+    CardListWrap: typeof import('./../src/components/CardListWrap/index.vue')['default']
     FadeTransition: typeof import('./../src/components/FadeTransition/index.vue')['default']
     NavTabsWrap: typeof import('./../src/components/NavTabsWrap/index.vue')['default']
-    PageWrap: typeof import('./../src/components/PageWrap/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Scrollbar: typeof import('./../src/components/Scrollbar/index.vue')['default']
     SvgIcon: typeof import('./../src/components/SvgIcon/index.vue')['default']
     Tabs: typeof import('./../src/components/Tabs/index.vue')['default']
+    VDialog: typeof import('./../src/components/VDialog/index.vue')['default']
     ViewTools: typeof import('./../src/components/ViewTools/index.vue')['default']
   }
 }

@@ -10,3 +10,7 @@
 .card-item-context {
 
 }
+
+.page-wrap {
+  @apply flex h-full w-full flex-col;
+}

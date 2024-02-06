@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import video from './modules/video'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -12,15 +13,10 @@ const router = createRouter({
         {
           path: '/',
           name: 'Home',
-          component: () => import('@/views/home/index.vue'),
+          component: () => import('@/pages/home/index.vue'),
           meta: { type: 'home' }
         },
-        {
-          path: '/',
-          name: 'Video',
-          component: () => import('@/views/video/index.vue'),
-          meta: { type: 'video' }
-        }
+        ...video
       ]
     }
   ]

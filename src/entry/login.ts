@@ -1,5 +1,5 @@
 import buildApp from '@/utils/entry-build'
-import Login from '@/views/login/index.vue'
+import Login from '@/pages/login/index.vue'
 
 const { app } = buildApp(
   defineComponent({

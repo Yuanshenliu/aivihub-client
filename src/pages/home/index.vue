@@ -3,10 +3,10 @@ defineOptions({ name: 'homePage' })
 </script>
 
 <template>
-  <page-wrap>
+  <div class="page-wrap">
     <nav-tabs-wrap> cdscsdsd </nav-tabs-wrap>
     <div>xxxxxxxxxxxxxxxx</div>
-  </page-wrap>
+  </div>
 </template>
 
 <style scoped lang="scss"></style>
