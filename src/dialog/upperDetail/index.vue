@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { UpperField } from 'types/index'
 import { UserOutlined } from '@ant-design/icons-vue'
+import { saveUpper } from '@/apis/upper'
 
 const params = inject<{ upperID?: string }>('common-dialog-params')
 const dialogRef = ref()
 const error = ref('')
 const appStore = useAppStore()
 const avatar = ref('')
+const saveLoading = ref(false)
 
 const upper = reactive<UpperField>({
   id: '',
@@ -22,6 +24,17 @@ async function selectAvatar() {
     avatar.value = url
     upper.avatar = blob
   } catch (e) {}
+}
+
+async function save(close: Function) {
+  saveLoading.value = true
+  const form = new FormData()
+
+  form.append('name', upper.name)
+  form.append('description', upper.description)
+  form.append('file', upper.avatar)
+
+  await saveUpper(form)
 }
 </script>
 
@@ -57,7 +70,7 @@ async function selectAvatar() {
 
     <template #footer="{ close }">
       <a-button class="mr-3" @click="close">取消</a-button>
-      <a-button type="primary">保存</a-button>
+      <a-button type="primary" @click="save(close)">保存</a-button>
     </template>
   </v-dialog>
 </template>
