@@ -31,7 +31,6 @@ export function createDialogWindow(
     }
   })
 
-  console.log(getBackground())
 
   dialogWindow.loadURL(path.join(URL, html))
 

@@ -20,7 +20,7 @@ const upper = reactive<UpperField>({
 
 async function selectAvatar() {
   try {
-    const { blob, url } = await appStore.openImageCropDialog(1)
+    const { blob, url } = await appStore.openImageCropDialog(0.75)
     avatar.value = url
     upper.avatar = blob
   } catch (e) {}
@@ -35,6 +35,7 @@ async function save(close: Function) {
   form.append('file', upper.avatar)
 
   await saveUpper(form)
+  close()
 }
 </script>
 
@@ -70,7 +71,7 @@ async function save(close: Function) {
 
     <template #footer="{ close }">
       <a-button class="mr-3" @click="close">取消</a-button>
-      <a-button type="primary" @click="save(close)">保存</a-button>
+      <a-button :loading="saveLoading" type="primary" @click="save(close)">保存</a-button>
     </template>
   </v-dialog>
 </template>

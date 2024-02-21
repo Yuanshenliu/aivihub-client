@@ -16,6 +16,7 @@ interface Props {
   sliderCls?: string
   tabCls?: string
   disabled?: boolean
+  loading?: boolean
 }
 
 const updateScrollViewFn = inject<() => void>(updateScrollView)
@@ -53,24 +54,22 @@ watch(
 <template>
   <div class="flex h-fit w-full bg-transparent" :class="'justify-' + position">
     <div class="tabs-content relative h-12 w-fit bg-transparent" ref="content">
-      <button
-        v-for="item in tabs"
-        :disabled="disabled"
-        ref="itemRefs"
-        class="h-full px-4"
-        :key="item?.value"
-        :data-tab="item?.value"
-        :class="[item?.value === modelValue ? 'tab__active_btn' : 'tab__disActive_btn', tabCls]"
-        @click="select(`${item?.value}`)"
-      >
-        {{ item?.label }}
-      </button>
+      <template v-if="!loading">
+        <button v-for="item in tabs" :disabled="disabled" ref="itemRefs" class="h-full px-4" :key="item?.value"
+          :data-tab="item?.value" :class="[item?.value === modelValue ? 'tab__active_btn' : 'tab__disActive_btn', tabCls]"
+          @click="select(`${item?.value}`)">
+          {{ item?.label }}
+        </button>
+      </template>
 
-      <div
-        class="tab__slider absolute bottom-0 h-0.5 rounded"
-        :class="sliderCls"
-        :style="{ left: sliderLeft + 'px' }"
-      ></div>
+      <template v-else>
+        <div v-for="item in tabs" :key="item.value"  class="w-fit h-full flex items-center justify-center">
+          <div class="w-[30px] h-6 loading-wrap px-4 inline-block mx-4"></div>
+        </div>
+      </template>
+
+      <div class="tab__slider absolute bottom-0 h-0.5 rounded" :class="sliderCls" :style="{ left: sliderLeft + 'px' }">
+      </div>
     </div>
   </div>
 </template>
@@ -81,6 +80,7 @@ button {
   border: transparent;
   cursor: pointer;
 }
+
 .tab__slider {
   height: 3px;
   transform: translate3d(-50%, 0, 0);

@@ -15,6 +15,12 @@ window.electron.invoke<AppParams>('init-app').then((params) => {
 
   app.mount('#app')
 
+  
   const appStore = useAppStore()
   appStore.token = params.token as string
+
+  for(const [key, value] of Object.entries(params)) {
+    // @ts-ignore
+    appStore[key] = value
+  }
 })

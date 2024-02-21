@@ -1,9 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { width, height, style } = useAppMainSize(16, 64)
+</script>
 
 <template>
   <div>
-    <div class="wrap">
-      <div v-for="i in 100">{{ i }}</div>
+    <div :style="style">
+      <EmptyType1></EmptyType1>
     </div>
   </div>
 </template>

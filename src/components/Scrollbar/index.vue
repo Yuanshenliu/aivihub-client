@@ -92,7 +92,7 @@ provide(updateScrollView, () => {
 
   &__view {
     width: 100%;
-    height: fit-content;
+    min-height: 100%;
   }
 
   .scrollbar__bar {

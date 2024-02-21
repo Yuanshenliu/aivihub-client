@@ -1,7 +1,7 @@
 import { OnEvent } from './ipc-event'
 import { ipcMain, BrowserWindow } from 'electron'
 import { createHome } from '../windows/home'
-import { store } from '../store'
+import { appParams } from '../store'
 
 ipcMain.on(OnEvent.CLOSE_WINDOW, (event) => {
   BrowserWindow.fromWebContents(event.sender)?.close()
@@ -12,7 +12,7 @@ ipcMain.on(OnEvent.MINI_WINDOW, (event) => {
 })
 
 ipcMain.on(OnEvent.SET_THEME, (_event, dark) => {
-  store.value.dark = dark
+  appParams.value.dark = dark
 })
 
 ipcMain.on(OnEvent.OPEN_DEV_TOOL, (_event) => {
@@ -21,7 +21,7 @@ ipcMain.on(OnEvent.OPEN_DEV_TOOL, (_event) => {
 
 ipcMain.on(OnEvent.LOGGED, (_event, token) => {
   createHome()
-  store.value.token = token
+  appParams.value.token = token
   BrowserWindow.fromWebContents(_event.sender)?.close()
 })
 
@@ -31,9 +31,4 @@ ipcMain.on(OnEvent.SET_FULL_WINDOW, (_event, full) => {
   } else {
     BrowserWindow.fromWebContents(_event.sender)?.restore()
   }
-})
-
-ipcMain.on(OnEvent.SET_IGNORE_MOUSE_EVENT, (_event, ignore, options) => {
-  const win = BrowserWindow.fromWebContents(_event.sender)
-  win?.setIgnoreMouseEvents(ignore, options)
 })

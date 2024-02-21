@@ -1,4 +1,4 @@
-<script setup generic="T extends []" lang="ts">
+<script setup lang="ts">
 import type { Component, VNode } from 'vue'
 import { chunk, fill } from 'lodash-es'
 
@@ -13,14 +13,17 @@ const props = defineProps<{
   picRate: number
   contextHeight: number
   loading?: boolean
-  items?: T
+  items?: any[]
 }>()
 
 const slots = defineSlots<{
-  default(props: { items?: T }): VNode[]
+  default(props: { items?: any[] }): VNode[]
+  empty(): any
 }>()
+
 const defaultSlot = ref<Component[]>([])
 const compList = ref<Component[][]>([])
+const empty = slots.empty()
 
 const itemNumber = computed<number>(() => {
   const x = (props.containerWidth + props.columnGap) / (props.columnGap + props.itemMinWidth)
@@ -36,9 +39,6 @@ function itemColNum(): number {
   return Number(Math.ceil(props.containerHeight / (imgH + props.contextHeight + props.rowGap)))
 }
 
-defaultSlot.value = slots.default({
-  items: fill(Array(itemColNum() * itemNumber.value), {}) as T
-})
 
 const itemStyle = (itemIndex: number) => {
   return {
@@ -49,12 +49,17 @@ const itemStyle = (itemIndex: number) => {
   }
 }
 
-watch(
-  () => props.loading,
-  (value) => {
-    value && (defaultSlot.value = slots.default({ items: props.items }))
+watchEffect(function() {
+  if(props.loading) {
+    defaultSlot.value = slots.default({
+      items: fill(Array(itemColNum() * itemNumber.value), {}) as T
+    })
+  }else{    
+    defaultSlot.value = slots.default({
+      items: props.items
+    })
   }
-)
+})
 
 watchEffect(function () {
   // @ts-ignore
@@ -63,7 +68,7 @@ watchEffect(function () {
 </script>
 
 <template>
-  <div class="h-fit w-full" :style="{ width: containerWidth + 'px' }">
+  <div v-if="loading || compList.length" class="h-fit w-full" :style="{ width: containerWidth + 'px' }">
     <div
       v-for="(row, rowIndex) in compList"
       :key="rowIndex"
@@ -74,6 +79,10 @@ watchEffect(function () {
         <component :is="item"></component>
       </div>
     </div>
+  </div>
+
+  <div v-else class="w-full" :style="{height: containerHeight + 'px'}">
+    <component :is="empty[0]"></component>
   </div>
 </template>
 

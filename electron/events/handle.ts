@@ -1,11 +1,11 @@
 import { HandleEvent, OnEvent } from './ipc-event'
 import { BrowserWindow, ipcMain, dialog } from 'electron'
-import { store } from '../store'
+import { appParams } from '../store'
 import fs from 'node:fs'
 import { createDialogWindow } from '../windows/dialog'
 
 ipcMain.handle(HandleEvent.INIT_APP, () => {
-  return { ...store.value }
+  return { ...appParams.value }
 })
 
 ipcMain.handle(HandleEvent.CAPTURE, (_event) => {

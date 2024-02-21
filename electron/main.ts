@@ -21,7 +21,7 @@ app.on('window-all-closed', () => {
 })
 
 app.whenReady().then(async () => {
-  await session.defaultSession.loadExtension('E:\\aivihub\\aivihub-client\\devtool')
+  //await session.defaultSession.loadExtension('E:\\aivihub\\aivihub-client\\devtool')
 
   createLoginWindow()
 })

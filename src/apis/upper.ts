@@ -5,7 +5,7 @@ export type Upper = {
   name: string
   description: string
   avatar: string | Blob
-  createTime: string
+  createTime: number
 }
 
 export function saveUpper(formData: FormData) {
@@ -13,4 +13,9 @@ export function saveUpper(formData: FormData) {
     data: formData,
     headers: { 'Content-Type': 'multipart/form-data' }
   })
+}
+
+export function getUpperList() {
+  return http.get<Upper[]>("/upper/list", {})
+
 }

@@ -10,22 +10,25 @@ export type WindowField = {
 
 export const windows: WindowField[] = []
 
-export type Store = {
+export type AppParams = {
+  [key:string]:any
   token?: string
   dark?: boolean
+  upperOrder?: string
 }
 
-export const store = ref<Store>({})
+
+export const appParams = ref<AppParams>({})
 
 watch(
-  () => store.value,
+  () => appParams.value,
   (value) => {
     windows.forEach((win) => win.window.webContents.send(SendEvent.ASYNC_PARAMS, value))
   }
 )
 
 watch(
-  () => store.value.dark,
+  () => appParams.value.dark,
   (value) => {
     windows.forEach((win) => win.window.setBackgroundColor(getBackground(value)))
   }

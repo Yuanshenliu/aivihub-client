@@ -5,8 +5,7 @@ export enum OnEvent {
   OPEN_DEV_TOOL = 'open-dev-tool',
   LOGGED = 'logged',
   SET_FULL_WINDOW = 'set-full-window',
-  CLOSE_DIALOG = 'close-dialog',
-  SET_IGNORE_MOUSE_EVENT = 'set-ignore-mouse-events'
+  CLOSE_DIALOG = 'close-dialog'
 }
 
 export enum HandleEvent {

@@ -1,5 +1,5 @@
-import { store } from '../store'
+import { appParams } from '../store'
 
-export function getBackground(dark = store.value.dark) {
+export function getBackground(dark = appParams.value.dark) {
   return dark ? '#000' : '#fff'
 }
