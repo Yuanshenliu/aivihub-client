@@ -21,9 +21,12 @@ interface Props {
 
 const updateScrollViewFn = inject<() => void>(updateScrollView)
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  loading: false
+})
 
 const select = (item: string | number) => {
+  if (!content.value?.getBoundingClientRect()) return
   emit('update:modelValue', item)
 
   const { left } = content.value?.getBoundingClientRect() as DOMRect
@@ -49,27 +52,48 @@ watch(
     select(props.modelValue)
   }
 )
+
+watchEffect(function () {
+  if (!props.loading) {
+    select(props.modelValue)
+  }
+})
 </script>
 
 <template>
   <div class="flex h-fit w-full bg-transparent" :class="'justify-' + position">
     <div class="tabs-content relative h-12 w-fit bg-transparent" ref="content">
       <template v-if="!loading">
-        <button v-for="item in tabs" :disabled="disabled" ref="itemRefs" class="h-full px-4" :key="item?.value"
-          :data-tab="item?.value" :class="[item?.value === modelValue ? 'tab__active_btn' : 'tab__disActive_btn', tabCls]"
-          @click="select(`${item?.value}`)">
+        <button
+          v-for="item in tabs"
+          :disabled="disabled"
+          ref="itemRefs"
+          class="h-full px-4"
+          :key="item?.value"
+          :data-tab="item?.value"
+          :class="[item?.value === modelValue ? 'tab__active_btn' : 'tab__disActive_btn', tabCls]"
+          @click="select(`${item?.value}`)"
+        >
           {{ item?.label }}
         </button>
       </template>
 
       <template v-else>
-        <div v-for="item in tabs" :key="item.value"  class="w-fit h-full flex items-center justify-center">
-          <div class="w-[30px] h-6 loading-wrap px-4 inline-block mx-4"></div>
+        <div class="flex h-full w-fit items-center justify-center">
+          <div
+            class="loading-wrap mx-4 inline-block h-6 w-[70px] px-4"
+            v-for="item in tabs"
+            :key="item.value"
+          ></div>
         </div>
       </template>
 
-      <div class="tab__slider absolute bottom-0 h-0.5 rounded" :class="sliderCls" :style="{ left: sliderLeft + 'px' }">
-      </div>
+      <div
+        v-if="!loading"
+        class="tab__slider absolute bottom-0 h-0.5 rounded"
+        :class="sliderCls"
+        :style="{ left: sliderLeft + 'px' }"
+      ></div>
     </div>
   </div>
 </template>

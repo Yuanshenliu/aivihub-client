@@ -31,7 +31,10 @@ export default {
     backgroundColor: ({ theme }) => {
       return {
         ...theme('colors'),
-        ...getbackground()
+        ...getbackground(),
+        ...{
+          'opacity-primary': 'rgba(var(--tw-primary), 0.5)'
+        }
       }
     }
   },

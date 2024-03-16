@@ -4,26 +4,33 @@ import { chunk, fill } from 'lodash-es'
 
 defineOptions({ name: 'CardListWrap' })
 
-const props = defineProps<{
-  containerWidth: number
-  containerHeight: number
-  itemMinWidth: number
-  rowGap: number
-  columnGap: number
-  picRate: number
-  contextHeight: number
-  loading?: boolean
-  items?: any[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    containerWidth: number
+    containerHeight: number
+    itemMinWidth: number
+    rowGap: number
+    columnGap: number
+    picRate: number
+    contextHeight: number
+    loading?: boolean
+    items?: any[]
+    wrapStyle?: Record<string, any>
+    showFooter?: boolean
+  }>(),
+  {}
+)
 
 const slots = defineSlots<{
   default(props: { items?: any[] }): VNode[]
   empty(): any
+  footer: any
 }>()
 
 const defaultSlot = ref<Component[]>([])
 const compList = ref<Component[][]>([])
 const empty = slots.empty()
+const footer = slots.footer && slots.footer()
 
 const itemNumber = computed<number>(() => {
   const x = (props.containerWidth + props.columnGap) / (props.columnGap + props.itemMinWidth)
@@ -39,7 +46,6 @@ function itemColNum(): number {
   return Number(Math.ceil(props.containerHeight / (imgH + props.contextHeight + props.rowGap)))
 }
 
-
 const itemStyle = (itemIndex: number) => {
   return {
     width: itemWidth.value + 'px',
@@ -49,12 +55,12 @@ const itemStyle = (itemIndex: number) => {
   }
 }
 
-watchEffect(function() {
-  if(props.loading) {
+watchEffect(function () {
+  if (props.loading) {
     defaultSlot.value = slots.default({
-      items: fill(Array(itemColNum() * itemNumber.value), {}) as T
+      items: fill(Array(itemColNum() * itemNumber.value), {})
     })
-  }else{    
+  } else {
     defaultSlot.value = slots.default({
       items: props.items
     })
@@ -68,7 +74,11 @@ watchEffect(function () {
 </script>
 
 <template>
-  <div v-if="loading || compList.length" class="h-fit w-full" :style="{ width: containerWidth + 'px' }">
+  <div
+    v-if="loading || compList.length"
+    class="h-fit w-full"
+    :style="{ width: containerWidth + 'px', ...wrapStyle }"
+  >
     <div
       v-for="(row, rowIndex) in compList"
       :key="rowIndex"
@@ -79,9 +89,13 @@ watchEffect(function () {
         <component :is="item"></component>
       </div>
     </div>
+
+    <div v-if="footer && showFooter" class="flex h-fit w-full justify-center">
+      <component :is="footer[0]" class="my-2"></component>
+    </div>
   </div>
 
-  <div v-else class="w-full" :style="{height: containerHeight + 'px'}">
+  <div v-else class="w-full" :style="{ height: containerHeight + 'px' }">
     <component :is="empty[0]"></component>
   </div>
 </template>

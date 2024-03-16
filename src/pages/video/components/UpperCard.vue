@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UpperField } from 'types/index'
-import { resourceUrl } from '@/utils' 
+import { resourceUrl } from '@/utils'
 
 defineOptions({ name: 'UpperCard' })
 const props = defineProps<{ upper?: UpperField }>()
@@ -9,7 +9,7 @@ const emit = defineEmits<{
 }>()
 
 const post = computed(() => {
-  if(!props.upper?.id) {
+  if (!props.upper?.id) {
     return {}
   }
   return {
@@ -20,10 +20,12 @@ const post = computed(() => {
 
 <template>
   <div class="h-fit w-full cursor-pointer" @click="emit('click', upper?.id)">
-    <div class="card-item-poster" 
-     style="background-position: center;background-size: cover;"
-     :style="post"
-     :class="{ 'loading-wrap': !upper?.id }"></div>
+    <div
+      class="card-item-poster"
+      style="background-position: center; background-size: cover"
+      :style="post"
+      :class="{ 'loading-wrap': !upper?.id }"
+    ></div>
 
     <div class="flex h-[35px] w-full items-center text-center text-[12px]">
       <span class="w-full truncate px-1 text-center" v-if="upper?.id">

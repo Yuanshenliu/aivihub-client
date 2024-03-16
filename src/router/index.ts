@@ -16,6 +16,12 @@ const router = createRouter({
           component: () => import('@/pages/home/index.vue'),
           meta: { type: 'home' }
         },
+        {
+          path: '/transmission',
+          name: 'Transmission',
+          component: () => import('@/pages/transmission/index.vue'),
+          meta: { type: 'transmission' }
+        },
         ...video
       ]
     }

@@ -16,6 +16,9 @@ export function saveUpper(formData: FormData) {
 }
 
 export function getUpperList() {
-  return http.get<Upper[]>("/upper/list", {})
+  return http.get<Upper[]>('/upper/list', {})
+}
 
+export function getUpperDetail(params: { id: string }) {
+  return http.get<Upper>('/upper/detail', { params })
 }

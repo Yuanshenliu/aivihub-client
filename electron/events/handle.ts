@@ -3,6 +3,7 @@ import { BrowserWindow, ipcMain, dialog } from 'electron'
 import { appParams } from '../store'
 import fs from 'node:fs'
 import { createDialogWindow } from '../windows/dialog'
+import path from 'node:path'
 
 ipcMain.handle(HandleEvent.INIT_APP, () => {
   return { ...appParams.value }
@@ -53,3 +54,21 @@ ipcMain.handle(
     })
   }
 )
+
+ipcMain.handle(HandleEvent.SELECT_VIDEO, () => {
+  return new Promise((resolve) => {
+    dialog
+      .showOpenDialog({
+        title: '选择视频',
+        filters: [{ name: 'Movies', extensions: ['mkv', 'avi', 'mp4'] }]
+      })
+      .then(async ({ canceled, filePaths }) => {
+        if (!canceled) {
+          const videoPath = filePaths[0]
+          const size = fs.statSync(videoPath).size
+          const extensionName = path.extname(videoPath)
+          resolve({ path: filePaths[0], size, extensionName })
+        }
+      })
+  })
+})

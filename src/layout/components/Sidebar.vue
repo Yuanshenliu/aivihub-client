@@ -68,6 +68,7 @@ function linkToVideo() {
     <div class="mb-8 flex flex-col items-center text-regular">
       <div
         class="no-drag mb-7 cursor-pointer text-[24px]"
+        @click="router.push({ name: 'Transmission' })"
         :class="{ '!text-primary': route.meta.type === 'transmission' }"
       >
         <svg-icon name="upload" />

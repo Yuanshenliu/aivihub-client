@@ -1,10 +1,14 @@
 {
   "color": {
     "default": {
-      "primary": "#ff82ab"
+      "primary": "#ff82ab",
+      "error": "#E84026",
+      "warning": "#ED6F21"
     },
     "dark": {
-      "primary": "#d44e7d"
+      "primary": "#d44e7d",
+      "error": "#D94838",
+      "warning": "#DB6B42"
     }
   },
   "text": {

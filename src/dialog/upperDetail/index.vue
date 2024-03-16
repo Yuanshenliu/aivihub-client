@@ -20,7 +20,7 @@ const upper = reactive<UpperField>({
 
 async function selectAvatar() {
   try {
-    const { blob, url } = await appStore.openImageCropDialog(0.75)
+    const { blob, url } = await appStore.openImageCropDialog(1)
     avatar.value = url
     upper.avatar = blob
   } catch (e) {}

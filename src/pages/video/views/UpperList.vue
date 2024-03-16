@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UpperCard from '../components/UpperCard.vue'
 import { getUpperList, type Upper } from '@/apis/upper'
-import { UnorderedListOutlined } from '@ant-design/icons-vue';
+import { UnorderedListOutlined } from '@ant-design/icons-vue'
 import { h } from 'vue'
 
 const appStore = useAppStore()
@@ -18,38 +18,41 @@ async function createUpper() {
 }
 
 async function getUppers() {
-  const data = await getUpperList()  
+  const data = await getUpperList()
   uppers.value = orderToData(data)
   loading.value = false
 }
 
-function orderToData(data: Upper[]){
-  if(appStore.appSettings.upperOrder[0] === '1') {
-    return data.sort((a,b) => {
+function orderToData(data: Upper[]) {
+  if (appStore.appSettings.upperOrder[0] === '1') {
+    return data.sort((a, b) => {
       return b.createTime - a.createTime
     })
-  }else if(appStore.appSettings.upperOrder[0] === '2') {
-    return data.sort((a,b) => {
+  } else if (appStore.appSettings.upperOrder[0] === '2') {
+    return data.sort((a, b) => {
       return a.createTime - b.createTime
     })
-  } else if(appStore.appSettings.upperOrder[0] === '3') {
+  } else if (appStore.appSettings.upperOrder[0] === '3') {
     return data.sort(function (a, b) {
-      return a.name.localeCompare(b.name);
+      return a.name.localeCompare(b.name)
     })
   } else {
     return data.sort(function (a, b) {
-      return - a.name.localeCompare(b.name);
+      return -a.name.localeCompare(b.name)
     })
   }
 }
 
 function toUpper(id?: string) {
-  router.push("/upper?id=" + id)
+  router.push('/upper?id=' + id)
 }
 
-watch(() => appStore.appSettings.upperOrder, () => {
-  uppers.value = orderToData(uppers.value)
-})
+watch(
+  () => appStore.appSettings.upperOrder,
+  () => {
+    uppers.value = orderToData(uppers.value)
+  }
+)
 
 getUppers()
 </script>
@@ -61,9 +64,14 @@ getUppers()
         <a-button :icon="h(UnorderedListOutlined)"></a-button>
 
         <template #overlay>
-          <a-menu :selected-keys="appStore.appSettings.upperOrder" @click="(args) => {
-            appStore.appSettings.upperOrder = args.keyPath as string[]
-          }">
+          <a-menu
+            :selected-keys="appStore.appSettings.upperOrder"
+            @click="
+              (args: any) => {
+                appStore.appSettings.upperOrder = args.keyPath as string[]
+              }
+            "
+          >
             <a-menu-item key="1">创建时间 - 由近到远</a-menu-item>
             <a-menu-item key="2">创建时间 - 由远到近</a-menu-item>
             <a-menu-item key="3">文件名 - 由A到Z</a-menu-item>
@@ -82,7 +90,7 @@ getUppers()
         :item-min-width="115"
         :column-gap="20"
         :row-gap="25"
-        :pic-rate="3 / 4"
+        :pic-rate="1"
         :context-height="35"
         :items="uppers"
       >

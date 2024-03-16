@@ -12,6 +12,7 @@ export enum HandleEvent {
   INIT_APP = 'init-app',
   CAPTURE = 'capture',
   SELECT_IMAGE = 'select-image',
+  SELECT_VIDEO = 'select-video',
   OPEN_DIALOG = 'open-dialog'
 }
 

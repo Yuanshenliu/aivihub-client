@@ -45,6 +45,14 @@
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-svg" "^4.2.1"
 
+"@ant-design/icons-vue@^7.0.1":
+  version "7.0.1"
+  resolved "https://registry.npmmirror.com/@ant-design/icons-vue/-/icons-vue-7.0.1.tgz#83de301771fadd03f3890e627314102405c31c22"
+  integrity sha512-eCqY2unfZK6Fe02AwFlDHLfoyEFreP6rBwAZMIJ1LugmfMiVgwWDYlp1YsRugaPtICYOabV1iWxXdP12u9U43Q==
+  dependencies:
+    "@ant-design/colors" "^6.0.0"
+    "@ant-design/icons-svg" "^4.2.1"
+
 "@antfu/utils@^0.7.6", "@antfu/utils@^0.7.7":
   version "0.7.7"
   resolved "https://registry.yarnpkg.com/@antfu/utils/-/utils-0.7.7.tgz#26ea493a831b4f3a85475e7157be02fb4eab51fb"
@@ -1432,7 +1440,7 @@ async-exit-hook@^2.0.1:
   resolved "https://registry.yarnpkg.com/async-exit-hook/-/async-exit-hook-2.0.1.tgz#8bd8b024b0ec9b1c01cccb9af9db29bd717dfaf3"
   integrity sha512-NW2cX8m1Q7KPA7a5M2ULQeZ2wR5qI5PAbw5L0UOMxdioVk9PMZ0h1TmyZEkPYrCvYjDlFICusOu1dlEKAAeXBw==
 
-async-validator@^4.0.0:
+async-validator@^4.0.0, async-validator@^4.2.5:
   version "4.2.5"
   resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-4.2.5.tgz#c96ea3332a521699d0afaaceed510a54656c6339"
   integrity sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==

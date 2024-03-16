@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import type { CommonDialogField } from 'types/index'
 import { base64toBlob } from '@/utils'
 
-type CommonDialog = 'imageCropper' | 'upperDetail' 
+type CommonDialog = 'imageCropper' | 'upperDetail' | 'collection' | 'submission'
 type AppSetting = {
   upperOrder: string[]
 }
@@ -12,7 +12,7 @@ export const useAppStore = defineStore('appStore', () => {
   const searching = ref<boolean>(false)
   const commonDialog = useStorage<CommonDialogField>('common-dialog', {})
   const cropperChannel = new BroadcastChannel('cropper-dialog')
-  const appSettings = useLocalStorage<AppSetting>("app-settings", {
+  const appSettings = useLocalStorage<AppSetting>('app-settings', {
     upperOrder: ['1']
   })
 

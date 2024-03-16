@@ -9,18 +9,17 @@ const commonDialog = useStorage('common-dialog', { dialogName: '' })
 
 async function closeWindow(args: Record<string, any> = {}) {
   commonDialog.value = null
-  console.log({ name, ...args })
   window.electron.send('close-dialog', { name, ...args })
 }
 </script>
 
 <template>
-  <div class="relative h-full w-full bg-regular px-4">
+  <div class="relative h-full w-full bg-regular px-6 py-1">
     <div class="drag flex h-[72px] w-full items-center justify-between text-regular">
       <div class="relative flex h-full flex-1 flex-col justify-center">
         <span class="text-[16px]">{{ title }}</span>
 
-        <span class="mt-1 w-full text-xs">
+        <span class="mt-1 w-full text-[11px]">
           <slot name="subtitle"></slot>
         </span>
       </div>
