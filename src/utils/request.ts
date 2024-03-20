@@ -2,12 +2,8 @@ import axios from 'axios'
 import type { SMRequestConfig } from 'types/request'
 import type { AxiosInstance } from 'axios'
 import { message as aMsg } from 'ant-design-vue'
-
-enum ResultEnum {
-  SUCCESS = 'SUCCESS',
-  WARNING = 'WARNING',
-  ERROR = 'ERROR'
-}
+// @ts-ignore
+import { ResultEnum } from 'types/index.d.ts'
 
 class Request {
   private instance: AxiosInstance

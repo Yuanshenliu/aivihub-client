@@ -20,6 +20,24 @@ export const useAppStore = defineStore('appStore', () => {
     return !searching.value
   })
 
+  const uploadChannel = useBroadcastChannel({
+    name: import.meta.env.VITE_UPLOAD_TASK_CHANNEL
+  })
+
+  watch(
+    () => uploadChannel.data.value,
+    (data) => {
+      window.electron.send(
+        'add-upload-task',
+        Object.assign(toRaw(data) as object, { type: 'media' })
+      )
+    }
+  )
+
+  window.electron.on('uploading-task', (queue) => {
+    console.log(JSON.stringify(queue))
+  })
+
   async function openCommonDialog<T>(
     name: CommonDialog,
     bounds: { width: number; height: number },

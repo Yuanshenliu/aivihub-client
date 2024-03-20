@@ -6,17 +6,6 @@ import router from '@/router'
 window.electron.invoke<AppParams>('init-app').then((params) => {
   const { app, setAppParams } = buildApp(
     defineComponent(() => {
-      const uploadChannel = useBroadcastChannel({
-        name: import.meta.env.VITE_UPLOAD_TASK_CHANNEL
-      })
-
-      watch(
-        () => uploadChannel.data.value,
-        (value) => {
-          console.log(value)
-        }
-      )
-
       return () => h(RouterView)
     }),
     [router]
@@ -27,6 +16,7 @@ window.electron.invoke<AppParams>('init-app').then((params) => {
   app.mount('#app')
 
   const appStore = useAppStore()
+
   appStore.token = params.token as string
 
   for (const [key, value] of Object.entries(params)) {

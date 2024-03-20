@@ -11,6 +11,13 @@ export type UpperField = {
   createTime: string
 }
 
+export enum ResultEnum {
+  SUCCESS = 'SUCCESS',
+  WARNING = 'WARNING',
+  ERROR = 'ERROR',
+  CHUNK_INDEX_ERROR = 'CHUNK_INDEX_ERROR'
+}
+
 export type CommonDialogField = {
   name?: string
   params?: Record<string, any>

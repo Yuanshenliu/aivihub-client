@@ -1,7 +1,10 @@
 import { app, session } from 'electron'
 import path from 'node:path'
 import { createLoginWindow } from './windows/login'
+import { taskManager } from './upload/manager'
 import './events'
+
+export const { addTask } = taskManager()
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 process.env.DIST = path.join(__dirname, '../dist')
@@ -21,7 +24,7 @@ app.on('window-all-closed', () => {
 })
 
 app.whenReady().then(async () => {
-  //await session.defaultSession.loadExtension('E:\\aivihub\\aivihub-client\\devtool')
+  await session.defaultSession.loadExtension('E:\\aivihub\\aivihub-client\\devtool')
 
   createLoginWindow()
 })

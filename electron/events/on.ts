@@ -2,6 +2,8 @@ import { OnEvent } from './ipc-event'
 import { ipcMain, BrowserWindow } from 'electron'
 import { createHome } from '../windows/home'
 import { appParams } from '../store'
+import type { UploadTaskOption } from '../upload/uploadTask'
+import { addTask } from '../main'
 
 ipcMain.on(OnEvent.CLOSE_WINDOW, (event) => {
   BrowserWindow.fromWebContents(event.sender)?.close()
@@ -31,4 +33,8 @@ ipcMain.on(OnEvent.SET_FULL_WINDOW, (_event, full) => {
   } else {
     BrowserWindow.fromWebContents(_event.sender)?.restore()
   }
+})
+
+ipcMain.on(OnEvent.ADD_UPLOAD_TASK, (_event, data: any) => {
+  addTask(data)
 })

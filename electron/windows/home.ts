@@ -6,9 +6,10 @@ import { getBackground } from '../utils/theme'
 import { SendEvent } from '../events/ipc-event'
 
 const html = 'home.html'
+export let home: BrowserWindow
 
 export function createHome() {
-  const home = new BrowserWindow({
+  home = new BrowserWindow({
     width: 1080,
     height: 658,
     minWidth: 1080,
