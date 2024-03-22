@@ -4,8 +4,10 @@ import { appParams } from '../store'
 import fs from 'node:fs'
 import { createDialogWindow } from '../windows/dialog'
 import path from 'node:path'
+import { initTaskQueue } from '../main'
 
 ipcMain.handle(HandleEvent.INIT_APP, () => {
+  initTaskQueue()
   return { ...appParams.value }
 })
 

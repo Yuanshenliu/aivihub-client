@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { CommonDialogField } from 'types/index'
 import { base64toBlob } from '@/utils'
+import type { TaskPackFiled } from '../../electron/upload/taskPack'
 
 type CommonDialog = 'imageCropper' | 'upperDetail' | 'collection' | 'submission'
 type AppSetting = {
@@ -12,6 +13,7 @@ export const useAppStore = defineStore('appStore', () => {
   const searching = ref<boolean>(false)
   const commonDialog = useStorage<CommonDialogField>('common-dialog', {})
   const cropperChannel = new BroadcastChannel('cropper-dialog')
+  const executedUploadTasks = ref<TaskPackFiled[]>([])
   const appSettings = useLocalStorage<AppSetting>('app-settings', {
     upperOrder: ['1']
   })
@@ -20,22 +22,8 @@ export const useAppStore = defineStore('appStore', () => {
     return !searching.value
   })
 
-  const uploadChannel = useBroadcastChannel({
-    name: import.meta.env.VITE_UPLOAD_TASK_CHANNEL
-  })
-
-  watch(
-    () => uploadChannel.data.value,
-    (data) => {
-      window.electron.send(
-        'add-upload-task',
-        Object.assign(toRaw(data) as object, { type: 'media' })
-      )
-    }
-  )
-
-  window.electron.on('uploading-task', (queue) => {
-    console.log(JSON.stringify(queue))
+  window.electron.on<TaskPackFiled[]>('uploading-task', (queue) => {
+    executedUploadTasks.value = queue
   })
 
   async function openCommonDialog<T>(
@@ -96,6 +84,7 @@ export const useAppStore = defineStore('appStore', () => {
     selectSingleImage,
     cropperChannel,
     appSettings,
-    openImageCropDialog
+    openImageCropDialog,
+    executedUploadTasks
   }
 })

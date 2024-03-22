@@ -4,6 +4,7 @@ import axios from 'axios'
 import { appParams } from '../store'
 // @ts-ignore
 import { ResultEnum } from '../../types/index.d.ts'
+import { addRecordsItem } from './recorder'
 
 export type UploadStatus = 'pause' | 'uploading' | 'wait' | 'finish'
 type Listener = 'progress' | 'status'
@@ -18,6 +19,7 @@ type UploadResponseFiled = {
 }
 
 export type UploadTaskOption = {
+  taskID: string
   key: string
   title: string
   path: string
@@ -29,12 +31,15 @@ export type UploadTaskOption = {
   directory: string
   uploadPercent: number
   type: TaskType
+  createdTime: number
+  uploadedTime: number
 }
 
 export const noop = () => {}
 const chunkSize = Number(import.meta.env.VITE_UPLOAD_CHUNK_SIZE)
 
 export class UploadTask {
+  taskID: string
   key: string
   title: string
   path: string
@@ -48,8 +53,11 @@ export class UploadTask {
   listener: Record<Listener, Function>
   type: TaskType
   timerId: any
+  createdTime: number
+  uploadedTime: number
 
   constructor(options: UploadTaskOption) {
+    this.taskID = options.taskID
     this.key = options.key
     this.title = options.title
     this.path = options.path
@@ -62,6 +70,8 @@ export class UploadTask {
     this.uploadPercent = options.uploadPercent || 0
     this.timerId = ''
     this.type = options.type
+    this.createdTime = options.createdTime
+    this.uploadedTime = options.uploadedTime
     this.listener = {
       progress: noop,
       status: noop
@@ -139,6 +149,8 @@ export class UploadTask {
         )
         .then(() => this.finish())
     }
+
+    this.record()
   }
 
   finish() {
@@ -146,10 +158,21 @@ export class UploadTask {
     this.cancelTimer()
   }
 
-  record() {}
+  record() {
+    const item = this.valueOf()
+    addRecordsItem({ ...item, status: item.status === 'finish' ? 'finish' : 'pause' })
+  }
 
-  valueOf() {
+  pause() {
+    this.status = 'pause'
+    this.cancelTimer()
+    this.listener.status(this.status)
+    this.record()
+  }
+
+  valueOf(): UploadTaskOption {
     return {
+      taskID: this.taskID,
       key: this.key,
       title: this.title,
       path: this.path,
@@ -160,7 +183,9 @@ export class UploadTask {
       currentChunk: this.currentChunk,
       directory: this.directory,
       uploadPercent: this.uploadPercent,
-      type: this.type
+      type: this.type,
+      createdTime: this.createdTime,
+      uploadedTime: this.uploadedTime
     }
   }
 }

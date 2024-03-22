@@ -1,27 +1,39 @@
 import type { UploadTaskOption } from './uploadTask'
 import { UploadTask } from './uploadTask'
 import { TaskPack } from './taskPack'
-import { ref } from 'vue'
 import path from 'node:path'
 import { debounce } from 'lodash-es'
 import { home } from '../windows/home'
 import { SendEvent } from '../events/ipc-event'
 
+import { getRecords } from './recorder'
+
 export function taskManager() {
-  const tasks = ref<UploadTask[]>([])
+  const tasks: UploadTask[] = []
 
   const taskPackObj: Record<string, TaskPack> = {}
 
-  function getTaskList() {
-    tasks.value.forEach((task) => {
-      if (!taskPackObj[task.directory]) taskPackObj[task.directory] = new TaskPack()
+  function initTaskQueue() {
+    const taskList = getRecords()
 
-      taskPackObj[task.directory].onProgress(() => {
-        console.log(3333)
+    taskList.forEach((option) => {
+      tasks.push(new UploadTask(option))
+    })
+
+    getTaskList(false)
+    notify()
+  }
+
+  function getTaskList(record = true) {
+    tasks.forEach((task) => {
+      if (!taskPackObj[task.taskID])
+        taskPackObj[task.taskID] = new TaskPack(task.directory, task.title)
+
+      taskPackObj[task.taskID].onProgress(() => {
         debounce(notify, 16)()
       })
 
-      taskPackObj[task.directory].addUploadTaskItem(task)
+      taskPackObj[task.taskID].addUploadTaskItem(task, record)
     })
   }
 
@@ -34,15 +46,18 @@ export function taskManager() {
     home.webContents.send(SendEvent.UPLOADING_TASKS, queue)
   }
 
-  function addTask(option: UploadTaskOption) {
+  function addTask(option: UploadTaskOption & { taskID: string }) {
     option.directory = path.parse(option.path).dir
     const task = new UploadTask(option)
     task.status = 'wait'
-    tasks.value.push(task)
+    tasks.push(task)
     getTaskList()
   }
 
   return {
-    addTask
+    addTask,
+    notify,
+    getTaskList,
+    initTaskQueue
   }
 }

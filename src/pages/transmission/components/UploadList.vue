@@ -2,9 +2,15 @@
 import { h } from 'vue'
 import { ArrowDownOutlined, PauseOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 import TransmissionItem from './TransmissionItem.vue'
+import { useAppStore } from '@/stores'
 
+const appStore = useAppStore()
 const defaultPercent = ref<number>(50)
 const showDrawer = ref(false)
+
+watchEffect(function () {
+  console.log(appStore.executedUploadTasks)
+})
 </script>
 
 <template>
@@ -29,7 +35,11 @@ const showDrawer = ref(false)
     </div>
 
     <div class="w-full px-3">
-      <TransmissionItem></TransmissionItem>
+      <TransmissionItem
+        v-for="task in appStore.executedUploadTasks"
+        :task="task"
+        :key="task.directory"
+      ></TransmissionItem>
     </div>
 
     <a-drawer

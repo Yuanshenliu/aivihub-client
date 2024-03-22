@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import type { UploadTask } from '../../../../electron/upload/uploadTask'
-const defaultPercent = ref<number>(50)
+import { calcSize } from '@/utils/size'
+
 const isDark = useDark()
+import type { TaskPackFiled } from '../../../../electron/upload/taskPack'
 
 const selected = ref(false)
-const props = defineProps<{ task: UploadTask }>()
+const props = defineProps<{ task: TaskPackFiled }>()
+
+const defaultPercent = computed(() => {
+  return (props.task.uploadedChunk / props.task.totalChunk) * 100
+})
 
 const strokeColor = computed(() => {
   if (isDark.value) {
@@ -18,11 +23,6 @@ const strokeColor = computed(() => {
     '0%': '#ff82ab',
     '100%': '#eaaac0'
   }
-})
-
-const title = computed(() => {
-  const idx = props.task.path.lastIndexOf('\\') + 1
-  return props.task.path.substring(idx)
 })
 </script>
 
@@ -38,14 +38,14 @@ const title = computed(() => {
     <div class="flex h-full flex-1 flex-col items-start justify-center px-4">
       <span class="flex w-full text-[13px]">
         <span class="line-clamp-1 text-regular">
-          极品爆乳鲜嫩美穴貌美尤物▌苏美奈▌家政女仆的肉体服务 肏到羞耻喷汁
+          {{ task.title }}
         </span>
       </span>
 
       <div
         class="relative top-1.5 mt-1 flex w-full items-center justify-between text-xs text-secondary"
       >
-        <span>0/30GB</span>
+        <span>{{ calcSize(task.uploadedSize) }} / {{ calcSize(task.totalSize) }}</span>
 
         <span>已暂停</span>
       </div>

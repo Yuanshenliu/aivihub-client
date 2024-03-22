@@ -4,7 +4,7 @@ import { createLoginWindow } from './windows/login'
 import { taskManager } from './upload/manager'
 import './events'
 
-export const { addTask } = taskManager()
+export const { addTask, notify, initTaskQueue } = taskManager()
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 process.env.DIST = path.join(__dirname, '../dist')

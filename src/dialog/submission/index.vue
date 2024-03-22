@@ -15,10 +15,6 @@ const videoSize = ref<number>(0)
 const videoExtensionName = ref<string>()
 const params = inject<{ actress: string }>('common-dialog-params')
 
-const channel = useBroadcastChannel({
-  name: import.meta.env.VITE_UPLOAD_TASK_CHANNEL
-})
-
 const videoPath = ref('')
 const tags = ref<{ label: string; value: string }[]>([])
 const submissionVideo = ref<SubmissionVideo>({
@@ -85,7 +81,10 @@ async function save(closeFn: Function) {
   })
 
   const task = await createSubmissionTag(form)
-  channel.post(task)
+  window.electron.send('add-upload-task', {
+    ...task,
+    ...{ type: 'media', taskID: new Date().getTime().toString() }
+  })
 
   closeFn()
 }
